@@ -1,0 +1,147 @@
+/* === HEADER === */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+
+  background: rgba(15, 15, 15, 0.8);
+
+  /* безопасный fallback */
+  @supports (backdrop-filter: blur(10px)) {
+    background: rgba(15, 15, 15, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
+}
+
+/* Скролл состояние */
+header.scrolled {
+  background: rgba(10, 10, 10, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Контейнер */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Лого */
+.logo a {
+  background: linear-gradient(90deg, #b6a97f, #f1e6c2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: transform .3s ease;
+}
+
+.logo a:hover {
+  transform: scale(1.06);
+}
+
+/* Навигация */
+nav {
+  flex: 1;
+  text-align: right;
+  position: relative;
+  z-index: 2001;
+}
+
+nav ul {
+  display: inline-flex;
+  gap: 35px;
+  list-style: none;
+  padding: 0;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 0;
+  font-size: 18px;
+  transition: .3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--accent-light);
+}
+
+/* === Гамбургер === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.hamburger span {
+  height: 3px;
+  width: 28px;
+  background: white;
+  border-radius: 2px;
+  transition: .3s ease;
+}
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* === Мобильное меню === */
+@media (max-width: 768px) {
+
+  nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background: rgba(10, 10, 10, 0.95);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+    transition: .3s ease;
+  }
+
+  nav.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px 0;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .logo {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo a {
+    font-size: 26px;
+  }
+}

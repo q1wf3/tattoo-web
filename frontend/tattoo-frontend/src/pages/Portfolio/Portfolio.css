@@ -1,0 +1,353 @@
+/* =========================================
+   VARIABLES
+========================================= */
+:root {
+  --primary-gold: #b6a97f;
+  --primary-gold-dark: #9c8e66;
+  --gold-glow: 0 0 22px rgba(182, 169, 127, 0.55);
+
+  --dark-bg: #0f0f0f;
+  --card-bg: #151515;
+  --text-light: #ffffff;
+
+  --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-strong: 0 18px 45px rgba(0, 0, 0, 0.65);
+  --shadow-gold: 0 10px 24px rgba(182, 169, 127, 0.4);
+
+  --radius: 20px;
+  --transition: 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* =========================================
+   BASE
+========================================= */
+.portfolio {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  color: var(--text-light);
+  position: relative;
+}
+
+/* =========================================
+   DESKTOP GALLERY — PREMIUM VOGUE STYLE
+========================================= */
+
+.desktop-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 34px;
+  padding: 10px;
+  margin-top: 0;
+}
+
+/* Card wrapper */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  cursor: pointer;
+  height: 420px;
+  transform-style: preserve-3d;
+  transition: var(--transition);
+  box-shadow:
+    var(--shadow-soft),
+    0 0 0 1px rgba(182, 169, 127, 0.15);
+}
+
+/* Subtle gold overlay */
+.gallery-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(182, 169, 127, 0.08),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: var(--transition);
+  pointer-events: none;
+}
+
+/* Image */
+.portfolio-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  filter: brightness(0.88);
+}
+
+/* ==== HOVER EFFECT: PARALLAX + GLOW ==== */
+.gallery-item:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: var(--shadow-strong), var(--shadow-gold);
+}
+
+.gallery-item:hover::before {
+  opacity: 1;
+}
+
+.gallery-item:hover .portfolio-image {
+  transform: scale(1.14) translateZ(40px);
+  filter: brightness(1);
+}
+
+/* =========================================
+   MOBILE — BEAUTIFUL CAROUSEL
+========================================= */
+
+.mobile-carousel {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-gallery {
+    display: none;
+  }
+
+  .mobile-carousel {
+    display: block;
+    margin-top: 20px;
+    padding-bottom: 60px;
+    position: relative;
+  }
+
+  /* Scroll area */
+  .carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 20px 20px;
+    gap: 24px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Slides */
+  .carousel-slide {
+    min-width: 85%;
+    height: 450px;
+    scroll-snap-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: var(--card-bg);
+    box-shadow: 
+      0 12px 32px rgba(0, 0, 0, 0.5),
+      0 0 0 2px rgba(182, 169, 127, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .carousel-slide:active {
+    transform: scale(0.98);
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: transform 0.4s ease;
+  }
+
+  .carousel-slide:active .carousel-image {
+    transform: scale(1.05);
+  }
+
+  /* Active slide styling */
+  .carousel-slide.active {
+    transform: scale(1);
+    box-shadow: 
+      0 16px 40px rgba(0, 0, 0, 0.6),
+      0 0 0 3px rgba(182, 169, 127, 0.4);
+  }
+
+  /* Navigation buttons */
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(182, 169, 127, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(182, 169, 127, 0.5);
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 16px rgba(182, 169, 127, 0.4);
+    z-index: 20;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-nav:hover,
+  .carousel-nav:active {
+    background: rgba(182, 169, 127, 1);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(182, 169, 127, 0.6);
+  }
+
+  .carousel-prev {
+    left: 5px;
+  }
+
+  .carousel-next {
+    right: 5px;
+  }
+
+  /* Indicators */
+  .carousel-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 0 20px;
+  }
+
+  .carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(182, 169, 127, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .carousel-indicator.active {
+    width: 28px;
+    height: 10px;
+    border-radius: 5px;
+    background: var(--primary-gold);
+    box-shadow: 0 0 12px rgba(182, 169, 127, 0.6);
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-slide {
+    min-width: 90%;
+    height: 400px;
+  }
+
+  .carousel-container {
+    padding: 15px 15px;
+    gap: 20px;
+  }
+
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .carousel-prev {
+    left: 2px;
+  }
+
+  .carousel-next {
+    right: 2px;
+  }
+}
+
+/* =========================================
+   MODAL VIEWER
+========================================= */
+
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.viewer-image {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 16px;
+  box-shadow: var(--shadow-strong);
+}
+
+/* =========================================
+   NAV BUTTONS IN VIEWER
+========================================= */
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: rgba(182, 169, 127, 0.95);
+  border: none;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: var(--shadow-gold);
+}
+
+.prev-button { left: 30px; }
+.next-button { right: 30px; }
+
+/* CLOSE */
+.close-button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  border-radius: 50%;
+  background: rgba(182, 169, 127, 0.95);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* MOBILE ADAPT */
+@media (max-width: 768px) {
+  .viewer-image {
+    max-width: 95%;
+    max-height: 85vh;
+  }
+
+  .nav-button {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .close-button {
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+    top: 15px;
+    right: 15px;
+  }
+}

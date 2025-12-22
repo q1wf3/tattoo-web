@@ -1,0 +1,325 @@
+.hero-block {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #0f0f0f; /* Fallback color */
+}
+/* --- Тикер --- */
+.ticker-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 30;
+  font-weight: 600;
+  font-size: clamp(0.8rem, 1.5vw, 1rem); /* уменьшенный шрифт */
+  letter-spacing: clamp(1px, 0.5vw, 2px);
+  text-transform: uppercase;
+  text-align: center;
+  color: #d4d4d4;
+  background-color: rgba(0,0,0,0.7);
+  border-top: 1px solid #414040da;
+  border-bottom: 1px solid #414040da;
+
+  /* Градиент для плавного появления/исчезновения */
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* --- Десктоп --- */
+.right-panel {
+  position: relative;
+  width: min(500px, 90%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(15px, 2vw, 20px);
+  background: rgba(0,0,0,0.45);
+  padding: clamp(20px, 3vw, 25px);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+  z-index: 30;
+  margin-right: min(50px, 5vw);
+}
+
+.video-player {
+  width: 100%;
+  height: min(320px, 45vh); /* Чуть больше по высоте */
+  object-fit: contain !important;
+  background: black;        /* Без белых полос */
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
+
+
+.book-btn {
+  background: linear-gradient(90deg, #b6a97f, #d4c79b);
+  border: none;
+  color: #121212;
+  padding: clamp(12px, 2vw, 14px) clamp(25px, 3vw, 35px);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  border-radius: 40px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 0 18px #b6a97f88;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: min(320px, 90vw);
+}
+
+.book-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #a8996f, #c1b285);
+}
+.book-btn:focus {
+  outline: 2px solid #b6a97f;
+  outline-offset: 3px;
+}
+
+.book-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- Мобильные устройства, планшеты, MacBook (1366px и меньше) --- */
+@media (max-width: 1366px) {
+  .hero-block {
+    background-image: none !important;
+  }
+
+  .mobile-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .background-video-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.3));
+    z-index: 1;
+  }
+
+  /* --- Бегущая строка --- */
+  .mobile-ticker {
+    font-size: clamp(0.7rem, 3vw, 0.9rem);
+    letter-spacing: clamp(1px, 1vw, 2px);
+    padding: clamp(8px, 2vh, 12px) 0;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(182, 169, 127, 0.1), rgba(212, 199, 155, 0.2), rgba(182, 169, 127, 0.1));
+    border-bottom: 1px solid #b6a97f;
+  }
+
+  .mobile-ticker .ticker-content {
+    font-size: clamp(0.7rem, 3vw, 0.9rem);
+    letter-spacing: clamp(1px, 1vw, 3px);
+    text-shadow: 0 0 10px rgba(182, 169, 127, 0.5);
+  }
+
+  /* --- Текст --- */
+  .mobile-content {
+    position: relative;
+    z-index: 3;
+    padding: 0 clamp(15px, 5vw, 25px);
+    max-width: min(90%, 600px);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding-top: clamp(40px, 10vh, 60px);
+    padding-bottom: clamp(80px, 15vh, 120px);
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  .mobile-content h1 {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: clamp(15px, 3vh, 25px);
+    color: #fff;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .mobile-features {
+    margin: clamp(15px, 3vh, 25px) 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1.5vh, 12px);
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 2vw, 12px);
+    font-size: clamp(0.85rem, 3vw, 1rem);
+    color: #f0f0f0;
+    padding: clamp(4px, 1vh, 8px) 0;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .feature-item:nth-child(1) { animation-delay: 0.1s; }
+  .feature-item:nth-child(2) { animation-delay: 0.2s; }
+  .feature-item:nth-child(3) { animation-delay: 0.3s; }
+  .feature-item:nth-child(4) { animation-delay: 0.4s; }
+
+  .feature-icon {
+    color: #b6a97f;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    min-width: clamp(16px, 4vw, 20px);
+    text-shadow: 0 0 8px rgba(182, 169, 127, 0.6);
+  }
+
+  .mobile-description {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    line-height: 1.6;
+    color: #e8e8e8;
+    margin-top: clamp(20px, 4vh, 30px);
+    margin-bottom: clamp(25px, 6vh, 40px);
+    text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+  }
+
+  /* --- Кнопка --- */
+  .book-btn {
+    position: absolute;
+    bottom: clamp(50px, 10vh, 80px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    width: min(85%, 320px);
+    max-width: min(320px, 90vw);
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    padding: clamp(14px, 2vh, 16px) clamp(25px, 4vw, 35px);
+    background: linear-gradient(90deg, #b6a97f, #d4c79b, #b6a97f);
+    background-size: 200% 100%;
+    border: none;
+    color: #121212;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 
+      0 0 20px #b6a97f,
+      0 0 40px rgba(182, 169, 127, 0.4),
+      0 0 60px rgba(182, 169, 127, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    transition: all 0.4s ease;
+    animation: button-glow 2s ease-in-out infinite alternate;
+  }
+  .book-btn:hover {
+    transform: translateX(-50%) scale(1.05);
+    background: linear-gradient(90deg, #a8996f, #c1b285, #a8996f);
+    background-size: 200% 100%;
+    box-shadow: 
+      0 0 25px #b6a97f,
+      0 0 50px rgba(182, 169, 127, 0.6),
+      0 0 75px rgba(182, 169, 127, 0.3),
+      inset 0 2px 6px rgba(255, 255, 255, 0.4);
+    animation: button-glow-hover 1.5s ease-in-out infinite alternate;
+  }
+
+  .book-btn:focus {
+    outline: 2px solid #b6a97f;
+    outline-offset: 3px;
+  }
+
+  .book-btn:active {
+    transform: translateX(-50%) scale(0.98);
+  }
+
+  /* Скрываем десктопные элементы */
+  .right-panel, .video-player, .ticker-container:not(.mobile-ticker) {
+    display: none;
+  }
+}
+
+/* --- Десктоп (большие экраны больше 1366px) --- */
+@media (min-width: 1367px) {
+  /* Скрываем мобильные элементы */
+  .mobile-video-wrapper, .overlay, .mobile-ticker, .mobile-content {
+    display: none;
+  }
+  
+  /* Показываем десктопные элементы */
+  .right-panel, .video-player, .ticker-container:not(.mobile-ticker) {
+    display: flex;
+  }
+}
+
+/* --- Анимации --- */
+@keyframes button-glow {
+  0% {
+    box-shadow: 
+      0 0 20px #b6a97f,
+      0 0 40px rgba(182, 169, 127, 0.4),
+      0 0 60px rgba(182, 169, 127, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 25px #b6a97f,
+      0 0 45px rgba(182, 169, 127, 0.5),
+      0 0 65px rgba(182, 169, 127, 0.3);
+  }
+}
+
+@keyframes button-glow-hover {
+  0% {
+    box-shadow: 
+      0 0 25px #b6a97f,
+      0 0 50px rgba(182, 169, 127, 0.6),
+      0 0 75px rgba(182, 169, 127, 0.3);
+  }
+  100% {
+    box-shadow: 
+      0 0 30px #b6a97f,
+      0 0 60px rgba(182, 169, 127, 0.7),
+      0 0 90px rgba(182, 169, 127, 0.4);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

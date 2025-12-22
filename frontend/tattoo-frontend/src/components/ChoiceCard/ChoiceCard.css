@@ -1,0 +1,156 @@
+/* ===========================
+   ChoiceCard.css - optimized
+   features: glass, gradient border,
+   parallax, accessible, responsive
+   =========================== */
+
+.choice-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;        /* consistent ratio */
+  min-height: 360px;
+  border-radius: 24px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  transition: transform .45s cubic-bezier(.2,.9,.25,1), box-shadow .45s ease;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+
+/* background image layer (parallax target) */
+.card-background {
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  transition: transform .8s cubic-bezier(.2,.9,.25,1);
+  z-index: 0;
+  transform-origin: center;
+}
+
+/* dark overlay gradient for readability */
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.88) 100%);
+  transition: opacity .35s ease;
+}
+
+/* content sits above layers */
+.card-content {
+  position: relative;
+  z-index: 3;
+  padding: 22px;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+/* Title and description */
+.card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: .2px;
+  color: #fff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+.card-description {
+  margin: 0;
+  color: rgba(255,255,255,0.9);
+  font-size: .95rem;
+  line-height: 1.35;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Action button - glass effect */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  border-radius: 999px;
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+  cursor: pointer;
+  transition: transform .28s ease, background .28s ease, box-shadow .28s ease;
+  font-weight: 600;
+  letter-spacing: .6px;
+}
+
+/* accent on hover/focused */
+.action-button.hovered,
+.action-button:hover,
+.action-button:focus {
+  background: var(--accent-color);
+  border-color: color-mix(in srgb, var(--accent-color) 80%, #000 20%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* svg arrow moves on hover */
+.action-button svg {
+  transition: transform .28s ease;
+}
+.action-button.hovered svg,
+.action-button:hover svg {
+  transform: translateX(4px);
+}
+
+/* gradient border decorative (works cross-browser) */
+.card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(135deg, var(--accent-color), rgba(255,255,255,0.04));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  opacity: 0.65;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+/* hover state */
+.choice-card:hover .card-border {
+  opacity: 1;
+}
+
+/* simple focus style for keyboard users */
+.choice-card:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(182,169,127,0.12), 0 12px 34px rgba(0,0,0,0.5);
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .choice-card {
+    aspect-ratio: 3 / 4;
+    min-height: 380px;
+    border-radius: 18px;
+  }
+
+  .card-title { font-size: 1.45rem; }
+  .card-description { font-size: .88rem; }
+  .action-button { padding: 10px 18px; }
+}

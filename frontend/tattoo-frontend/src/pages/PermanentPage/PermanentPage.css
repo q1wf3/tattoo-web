@@ -1,0 +1,371 @@
+.permanent-page {
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+}
+
+/* ---------------- HERO c видео ---------------- */
+
+.permanent-page .hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  /* background-image removed - now set via inline style in JSX */
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Mobile/Tablet Background Video */
+.permanent-page .hero-video.mobile-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(45%);
+  z-index: 1;
+  display: none; /* Hidden on desktop */
+}
+
+.permanent-page .hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.4)
+  );
+  z-index: 2;
+}
+
+.permanent-page .hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 800px;
+  padding: 0 40px;
+  flex: 1;
+  text-align: left;
+}
+
+.permanent-page .hero-content h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.permanent-page .hero-content p {
+  color: #b0b0b0;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  margin-top: 20px;
+  margin-bottom: 32px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Mobile: Show video, hide background image */
+@media (max-width: 968px) {
+  .permanent-page .hero-section {
+    background-image: none !important;
+    justify-content: center;
+  }
+
+  .permanent-page .hero-video.mobile-video {
+    display: block !important;
+  }
+
+  .hero-video-panel.desktop-panel {
+    display: none !important;
+  }
+
+  .permanent-page .hero-content {
+    text-align: center;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .permanent-page .hero-section {
+    height: 100vh;
+    min-height: 600px;
+    background-image: none !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .permanent-page .hero-content {
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .permanent-page .hero-content h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .permanent-page .hero-content p {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 0 15px;
+  }
+
+  .permanent-page .portfolio-section,
+  .permanent-page .howitworks-section {
+    padding: 40px 20px;
+  }
+
+  .permanent-page .portfolio-section h2,
+  .permanent-page .howitworks-section h2 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .permanent-page .hero-section {
+    height: 100vh;
+    min-height: 500px;
+  }
+
+  .permanent-page .hero-content {
+    padding: 0 15px;
+  }
+
+  .permanent-page .hero-content h1 {
+    font-size: clamp(1.8rem, 10vw, 2.5rem);
+  }
+
+  .permanent-page .portfolio-section,
+  .permanent-page .howitworks-section {
+    padding: 30px 15px;
+  }
+}
+/* Desktop Video Panel */
+.hero-video-panel {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  display: none;
+}
+
+.desktop-panel {
+  display: block;
+}
+
+.video-panel-wrapper {
+  position: relative;
+  width: 400px;
+}
+
+.video-panel-content {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(182, 169, 127, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(182, 169, 127, 0.3);
+}
+
+.panel-video {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  .panel-book-btn {
+    width: 100%;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, #b6a97f, #d4c79b);
+    border: none;
+    border-radius: 14px;
+    color: #121212 !important; /* Force dark color */
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(182, 169, 127, 0.4);
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    z-index: 10; /* Higher z-index */
+    text-align: center;
+    display: block;
+  }
+  
+  .panel-book-btn:hover {
+    background: linear-gradient(135deg, #a8996f, #c1b285);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(182, 169, 127, 0.6);
+    color: #121212 !important;
+  }
+  
+    .permanent-page .hero-content h1 {
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+  
+    .permanent-page .hero-content p {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      padding: 0 15px;
+    }
+  
+    .permanent-page .portfolio-section h2,
+    .permanent-page .howitworks-section h2 {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      margin-bottom: 30px;
+    }
+  }
+
+/* Section titles styling */
+.permanent-page .section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------------- HOW IT WORKS ---------------- */
+/* ---------------- HOW IT WORKS ---------------- */
+
+.permanent-page .howitworks-section {
+  background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+  padding: 80px 40px;
+}
+
+.permanent-page .howitworks-section h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------------- ADAPTIVE ---------------- */
+
+@media (max-width: 1200px) {
+  .video-panel-wrapper {
+    width: 350px;
+  }
+
+  .panel-video {
+    height: 240px;
+  }
+}
+
+@media (max-width: 968px) {
+  .hero-video-panel {
+    display: none !important;
+  }
+
+  .permanent-page .hero-section {
+    background-image: none;
+    justify-content: center;
+  }
+
+  .permanent-page .hero-content {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .permanent-page .hero-section {
+    height: 70vh;
+    background-image: none;
+  }
+
+  .permanent-page .hero-content h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .permanent-page .hero-content p {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 0 15px;
+  }
+
+  .permanent-page .portfolio-section,
+  .permanent-page .howitworks-section {
+    padding: 40px 20px;
+  }
+
+  .permanent-page .portfolio-section h2,
+  .permanent-page .howitworks-section h2 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .permanent-page .hero-section {
+    height: 60vh;
+  }
+
+  .permanent-page .hero-content {
+    padding: 0 15px;
+  }
+
+  .permanent-page .hero-content h1 {
+    font-size: clamp(1.8rem, 10vw, 2.5rem);
+  }
+
+  .permanent-page .portfolio-section,
+  .permanent-page .howitworks-section {
+    padding: 30px 15px;
+  }
+}
+
+.section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+
+.section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0;
+}
+
+.section-title {
+  font-family: var(--font-heading, "Playfair Display", serif);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  background: linear-gradient(135deg, #ffffff, #e6e6e6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: #b0b0b0;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
