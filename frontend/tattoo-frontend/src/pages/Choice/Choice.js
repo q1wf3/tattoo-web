@@ -1,170 +1,61 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChoiceCard from '../../components/ChoiceCard/ChoiceCard';
 import './Choice.css';
 
-const choices = [
-  {
-    title: 'Тату',
-    description: 'Уникальные татуировки любой сложности',
-    bgImage: `${process.env.PUBLIC_URL}/images/tattoo-bg.jpg`,
-    path: '/tattoo',
-    accentColor: '#b6a97f',
-  },
-  {
-    title: 'Перманент',
-    description: 'Эстетичный перманентный макияж',
-    bgImage: `${process.env.PUBLIC_URL}/images/permanent-bg.jpg`,
-    path: '/permanent',
-    accentColor: '#d4a5a5',
-  }
-];
-
 const Choice = () => {
-  const desktopRefs = useRef([]);
-  const mobileRefs = useRef([]);
-  const [current, setCurrent] = useState(0); // active slide on mobile
-  const carouselRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
 
-  // IntersectionObserver for both desktop and mobile refs
   useEffect(() => {
-    const all = [...(desktopRefs.current || []), ...(mobileRefs.current || [])].filter(Boolean);
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    all.forEach(el => observer.observe(el));
-    return () => observer.disconnect();
+    const t = setTimeout(() => setMounted(true), 80);
+    return () => clearTimeout(t);
   }, []);
 
-  // Swipe handling for mobile carousel (supports touch + mouse)
+  // ✅ ВАЖНО: ставим класс на body, чтобы ТОЛЬКО на этой странице сделать navbar sticky
   useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
+    document.body.classList.add('choice-route');
+    return () => document.body.classList.remove('choice-route');
+  }, []);
 
-    let startX = 0;
-    let currentX = 0;
-    let dragging = false;
-
-    const setTranslate = (dx) => {
-      el.style.transform = `translateX(${dx}px)`;
-    };
-
-    const onStart = (e) => {
-      dragging = true;
-      startX = e.touches ? e.touches[0].clientX : e.clientX;
-      el.classList.add('dragging');
-    };
-
-    const onMove = (e) => {
-      if (!dragging) return;
-      currentX = e.touches ? e.touches[0].clientX : e.clientX;
-      const dx = currentX - startX;
-      setTranslate(dx);
-    };
-
-    const onEnd = () => {
-      if (!dragging) return;
-      dragging = false;
-      el.classList.remove('dragging');
-      const dx = currentX - startX;
-      const threshold = Math.max(60, el.clientWidth * 0.12);
-      if (dx < -threshold && current < choices.length - 1) setCurrent(c => c + 1);
-      else if (dx > threshold && current > 0) setCurrent(c => c - 1);
-      // reset transform (animation via CSS)
-      el.style.transform = '';
-    };
-
-    // touch
-    el.addEventListener('touchstart', onStart, { passive: true });
-    el.addEventListener('touchmove', onMove, { passive: true });
-    el.addEventListener('touchend', onEnd);
-    // mouse
-    el.addEventListener('mousedown', onStart);
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onEnd);
-
-    return () => {
-      el.removeEventListener('touchstart', onStart);
-      el.removeEventListener('touchmove', onMove);
-      el.removeEventListener('touchend', onEnd);
-      el.removeEventListener('mousedown', onStart);
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseup', onEnd);
-    };
-  }, [current]);
-
-  // keyboard nav for mobile
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'ArrowRight' && current < choices.length - 1) setCurrent(c => c + 1);
-      if (e.key === 'ArrowLeft' && current > 0) setCurrent(c => c - 1);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [current]);
+  const choices = [
+    {
+      title: 'Тату',
+      description: 'Уникальные татуировки любой сложности и стиля',
+      bgImage: `${process.env.PUBLIC_URL}/images/tattoo-bg.jpg`,
+      path: '/tattoo',
+      accentColor: '#b6a97f',
+    },
+    {
+      title: 'Перманент',
+      description: 'Эстетичный перманентный макияж и коррекция',
+      bgImage: `${process.env.PUBLIC_URL}/images/permanent-bg.jpg`,
+      path: '/permanent',
+      accentColor: '#d4a5a5',
+    },
+  ];
 
   return (
-    <div className="choice-page">
-      <div className="choice-header">
-        <h1 className="choice-title">Выберите направление</h1>
-        <p className="choice-subtitle">Искусство, которое останется с вами навсегда</p>
-      </div>
+    <section className={`choice-page premium ${mounted ? 'is-mounted' : ''}`}>
+      <div className="choice-shell">
+        {/* ✅ ПРОСТО ТЕКСТ НАД КАРТОЧКАМИ */}
+        <div className="choice-heading">
+          <h1 className="choice-title">Выберите направление</h1>
+          <p className="choice-subtitle">Один клик — и вы сразу попадёте в нужный раздел</p>
+        </div>
 
-      {/* DESKTOP */}
-      <div className="desktop-layout">
         <div className="choice-grid">
-          {choices.map((item, index) => (
-            <div
-              key={index}
-              ref={el => (desktopRefs.current[index] = el)}
-              className="card-wrapper"
-            >
+          {choices.map((item, i) => (
+            <div key={item.title} className="choice-item" style={{ '--d': `${i * 120}ms` }}>
               <ChoiceCard {...item} />
             </div>
           ))}
         </div>
-      </div>
 
-      {/* MOBILE */}
-      <div className="mobile-layout">
-        <div className="choice-carousel-outer">
-          <div
-            className="choice-carousel"
-            ref={carouselRef}
-            style={{ transform: `translateX(${ -current * 100 }%)` }}
-            aria-roledescription="carousel"
-          >
-            {choices.map((item, index) => (
-              <div
-                key={index}
-                ref={el => (mobileRefs.current[index] = el)}
-                className={`carousel-card-wrapper ${current === index ? 'active' : ''}`}
-                aria-hidden={current !== index}
-              >
-                <ChoiceCard {...item} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* dots */}
-        <div className="carousel-controls" aria-hidden={choices.length <= 1}>
-          {choices.map((_, i) => (
-            <button
-              key={i}
-              className={`dot ${i === current ? 'active' : ''}`}
-              onClick={() => setCurrent(i)}
-              aria-label={`Перейти к слайду ${i + 1}`}
-            />
-          ))}
+        <div className="choice-footer">
+          <span className="choice-dot" aria-hidden="true" />
+          <span className="footer-text">Быстрый выбор • Профессиональный подход</span>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

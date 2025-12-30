@@ -1,147 +1,311 @@
-/* -------------------------
-   CHOICE PAGE — FIXED VERSION
--------------------------- */
+/* Choice.css — PREMIUM COSMETIC (CLEAN HEADING + SOFT GLOW + PERFECT RHYTHM) */
 
-:root {
-  --max-width: 1180px;
-  --card-max: 420px;
-  --accent-soft: rgba(182,169,127,0.12);
-}
+.choice-page.premium {
+  width: 100%;
+  min-height: 100svh;
+  position: relative;
+  overflow-x: hidden;
 
-/* PAGE */
-.choice-page {
-  min-height: 100vh;
-  padding: 40px 18px 80px;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(182,169,127,0.06) 0%, transparent 30%),
-    radial-gradient(circle at 80% 20%, rgba(212,165,165,0.05) 0%, transparent 30%),
-    linear-gradient(135deg, #0f0f0f, #1a1a1a, #151515);
-  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden;
+  justify-content: flex-start;
+
+  padding: 44px 20px 64px;
+
+  background: transparent;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
 }
 
-/* HEADER */
-.choice-header {
+/* фон: мягкие радиальные + легкая виньетка */
+.choice-page.premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(80% 60% at 50% 0%,
+      rgba(255, 255, 255, 0.06),
+      rgba(0, 0, 0, 0) 58%),
+    radial-gradient(70% 60% at 20% 30%,
+      rgba(182, 169, 127, 0.08),
+      rgba(0, 0, 0, 0) 55%),
+    radial-gradient(70% 60% at 80% 35%,
+      rgba(212, 165, 165, 0.08),
+      rgba(0, 0, 0, 0) 55%),
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.22),
+      rgba(0, 0, 0, 0.10) 45%,
+      rgba(0, 0, 0, 0.22)
+    );
+}
+
+/* легкая зернистость (очень аккуратно) */
+.choice-page.premium::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.15) 0px,
+      rgba(255, 255, 255, 0.15) 1px,
+      transparent 2px,
+      transparent 7px
+    );
+  mix-blend-mode: overlay;
+}
+
+.choice-shell {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 1200px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+/* ====== Heading ====== */
+.choice-heading {
+  width: 100%;
   text-align: center;
-  margin-bottom: 40px;
-  width: 100%;
-  max-width: var(--max-width);
+  margin: 0 0 40px 0;
+  padding: 0 14px;
+  box-sizing: border-box;
 }
 
-/* DESKTOP GRID — FIXED SIZE */
-.desktop-layout {
-  width: 100%;
-  max-width: var(--max-width);
-}
-
-.choice-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(260px, var(--card-max)));
-  gap: 48px;
-  justify-content: center;
-  padding-bottom: 50px;
-}
-
-/* card wrapper */
-.card-wrapper {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: all .7s cubic-bezier(.2,.9,.25,1);
-}
-.card-wrapper.animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* MOBILE LAYOUT */
-.mobile-layout {
-  display: none;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.choice-carousel-outer {
-  overflow: hidden;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-}
-
-.choice-carousel {
-  display: flex;
-  will-change: transform;
-  transition: transform .45s cubic-bezier(.2,.9,.25,1);
-}
-
-.carousel-card-wrapper {
-  width: 92%;
-  max-width: 380px;
-  flex-shrink: 0;
-  padding: 8px;
-}
-
-/* dots */
-.carousel-controls {
-  display: flex;
+/* мини бейдж */
+.choice-heading .choice-badge {
+  display: inline-flex;
+  align-items: center;
   gap: 10px;
+
+  padding: 9px 16px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  margin-bottom: 18px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.choice-title {
+  margin: 0 0 12px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+
+  text-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+
+/* аккуратная линия под заголовком */
+.choice-title::after {
+  content: "";
+  display: block;
+  width: 92px;
+  height: 2px;
+  margin: 16px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.22),
+    rgba(255,255,255,0)
+  );
+}
+
+.choice-subtitle {
+  margin: 0;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+  font-weight: 450;
+  max-width: 640px;
+  margin-inline: auto;
+  text-shadow: 0 14px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* ====== Grid ====== */
+.choice-grid {
+  width: 100%;
+  display: flex;
   justify-content: center;
-  margin-top: 16px;
+  align-items: stretch;
+  gap: 24px;
+  flex-wrap: wrap;
+
+  padding: 0 12px;
+  margin-bottom: 28px;
+  box-sizing: border-box;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,.16);
-}
-.dot.active {
-  background: rgba(182,169,127,.9);
+/* animation */
+.choice-item {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: cardAppear 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
-/* --------------------------
-   RESPONSIVE BREAKPOINTS
---------------------------- */
-
-/* iPad Air / Pro — FIX BLACK STRIPE */
-@media (min-width: 769px) and (max-width: 1180px) {
-  .choice-grid {
-    grid-template-columns: repeat(2, minmax(240px, 360px));
-    gap: 38px;
+@keyframes cardAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  .desktop-layout {
-    display: flex;
+}
+
+.choice-page.is-mounted .choice-item {
+  animation-play-state: running;
+}
+
+/* footer */
+.choice-footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 22px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+
+  margin-top: 18px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.choice-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b6a97f;
+  box-shadow: 0 0 18px rgba(182, 169, 127, 0.35);
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 1024px) {
+  .choice-page.premium {
+    padding: 36px 16px 58px;
+  }
+
+  .choice-title {
+    font-size: 44px;
+  }
+
+  .choice-subtitle {
+    font-size: 16px;
+  }
+
+  .choice-grid {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .choice-page.premium {
+    padding: 22px 12px 46px;
+  }
+
+  .choice-heading {
+    margin-bottom: 24px;
+    padding: 0 10px;
+  }
+
+  .choice-heading .choice-badge {
+    font-size: 11px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+  }
+
+  .choice-title {
+    font-size: 34px;
+  }
+
+  .choice-title::after {
+    width: 72px;
+    margin-top: 14px;
+  }
+
+  .choice-subtitle {
+    font-size: 14.5px;
+  }
+
+  .choice-grid {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 14px;
+    padding: 0;
+    margin-bottom: 18px;
+  }
+
+  .choice-item {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .choice-footer {
+    padding: 10px 18px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .choice-title {
+    font-size: 30px;
+  }
+
+  .choice-subtitle {
+    font-size: 14px;
+  }
+
+  .choice-footer {
+    width: 100%;
+    max-width: 420px;
     justify-content: center;
   }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .desktop-layout { display: none; }
-  .mobile-layout { display: block; }
-  .choice-page { padding: 26px 12px 60px; }
-
-  .carousel-card-wrapper { width: 92%; max-width: 360px; }
-}
-
-/* Landscape phone */
-@media (max-height: 520px) and (orientation: landscape) {
-  .choice-carousel {
-    gap: 18px;
+@media (prefers-reduced-motion: reduce) {
+  .choice-item {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
-  .carousel-card-wrapper {
-    width: 46%;
-    min-width: 240px;
-  }
-  .carousel-controls {
-    display: none;
-  }
-}
-
-/* very small phones */
-@media (max-width: 380px) {
-  .carousel-card-wrapper { width: 94%; }
 }
