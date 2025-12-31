@@ -43,7 +43,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 5px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-main);
 }
 
 .footer-description {

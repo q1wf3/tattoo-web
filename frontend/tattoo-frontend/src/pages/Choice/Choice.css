@@ -112,7 +112,7 @@
 
 .choice-title {
   margin: 0 0 12px 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-main);
   font-size: 54px;
   font-weight: 700;
   line-height: 1.05;

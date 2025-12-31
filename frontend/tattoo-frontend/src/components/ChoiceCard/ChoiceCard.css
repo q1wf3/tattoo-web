@@ -4,6 +4,7 @@
   position: relative;
   width: 100%;
   max-width: 460px;
+  
 
   /* ПК: приятная пропорция, не “постер” */
   aspect-ratio: 16 / 10.6;
@@ -31,6 +32,25 @@
     border-color 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
 
   box-sizing: border-box;
+}
+
+@media (min-width: 1025px) and (max-height: 900px) {
+  .choice-card {
+    max-width: 380px;
+    aspect-ratio: 16 / 9.6;
+  }
+
+  .card-content {
+    padding: 20px 20px 18px;
+  }
+
+  .card-title {
+    font-size: 30px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+  }
 }
 
 /* Background image */
@@ -145,7 +165,7 @@
 
 .card-title {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-main);
   font-size: 34px;
   line-height: 1.05;
   font-weight: 700;

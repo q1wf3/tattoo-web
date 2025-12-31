@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './HowItWorks.css';
 import Popup from '../../components/Popup/Popup';
 
-const steps = [
+const defaultSteps = [
   {
     title: 'Согласование эскиза',
     text: 'Обсуждаем эскиз и вносим правки, если они нужны. Распечатываем несколько вариантов и вместе выбираем лучший.',
@@ -25,14 +25,15 @@ const steps = [
   },
 ];
 
-const HowItWorks = () => {
+const HowItWorks = ({ steps }) => {
+  const stepsToRender = steps && steps.length ? steps : defaultSteps;
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const togglePopup = () => setIsPopupVisible(!isPopupVisible);
 
   return (
     <section className="how-it-works">
       <div className="steps-container">
-        {steps.map((step, index) => (
+        {stepsToRender.map((step, index) => (
           <div className="step" key={index}>
             <div className="step-number">{index + 1}</div>
             <div className="step-content">

@@ -61,7 +61,7 @@
 
 /* Заголовок */
 .popup-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-main);
   font-size: 1.8rem;
   color: #f8f8f8;
   margin-bottom: 15px;
@@ -72,7 +72,7 @@
 
 /* Текст */
 .popup-text {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-main);
   font-size: 1.1rem;
   line-height: 1.6;
   color: #d8d8d8;

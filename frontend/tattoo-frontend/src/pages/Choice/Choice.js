@@ -36,10 +36,11 @@ const Choice = () => {
   return (
     <section className={`choice-page premium ${mounted ? 'is-mounted' : ''}`}>
       <div className="choice-shell">
-        {/* ✅ ПРОСТО ТЕКСТ НАД КАРТОЧКАМИ */}
+        {/* ? ПРОСТО ТЕКСТ НАД КАРТОЧКАМИ */}
         <div className="choice-heading">
+          <span className="choice-badge">VikaVikaTattoo</span>
           <h1 className="choice-title">Выберите направление</h1>
-          <p className="choice-subtitle">Один клик — и вы сразу попадёте в нужный раздел</p>
+          <p className="choice-subtitle">Один клик - и вы сразу попадёте в нужный раздел</p>
         </div>
 
         <div className="choice-grid">

@@ -1,7 +1,22 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import './Portfolio.css';
 
-const Portfolio = () => {
+const defaultImages = [
+  { id: 1, src: `${process.env.PUBLIC_URL}/images/image1.png`, alt: "Татуировка 1" },
+  { id: 2, src: `${process.env.PUBLIC_URL}/images/image2.png`, alt: "Татуировка 2" },
+  { id: 3, src: `${process.env.PUBLIC_URL}/images/image3.png`, alt: "Татуировка 3" },
+  { id: 4, src: `${process.env.PUBLIC_URL}/images/image4.png`, alt: "Татуировка 4" },
+  { id: 5, src: `${process.env.PUBLIC_URL}/images/image5.png`, alt: "Татуировка 5" },
+  { id: 6, src: `${process.env.PUBLIC_URL}/images/image6.png`, alt: "Татуировка 6" },
+  { id: 7, src: `${process.env.PUBLIC_URL}/images/image7.png`, alt: "Татуировка 7" },
+  { id: 8, src: `${process.env.PUBLIC_URL}/images/image8.png`, alt: "Татуировка 8" },
+  { id: 9, src: `${process.env.PUBLIC_URL}/images/image9.png`, alt: "Татуировка 9" },
+  { id: 10, src: `${process.env.PUBLIC_URL}/images/image10.png`, alt: "Татуировка 10" },
+  { id: 11, src: `${process.env.PUBLIC_URL}/images/image11.png`, alt: "Татуировка 11" },
+  { id: 12, src: `${process.env.PUBLIC_URL}/images/image12.png`, alt: "Татуировка 12" },
+];
+
+const Portfolio = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(null);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
@@ -9,20 +24,7 @@ const Portfolio = () => {
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef(null);
 
-  const images = [
-    { id: 1, src: `${process.env.PUBLIC_URL}/images/image1.png`, alt: "Татуировка 1" },
-    { id: 2, src: `${process.env.PUBLIC_URL}/images/image2.png`, alt: "Татуировка 2" },
-    { id: 3, src: `${process.env.PUBLIC_URL}/images/image3.png`, alt: "Татуировка 3" },
-    { id: 4, src: `${process.env.PUBLIC_URL}/images/image4.png`, alt: "Татуировка 4" },
-    { id: 5, src: `${process.env.PUBLIC_URL}/images/image5.png`, alt: "Татуировка 5" },
-    { id: 6, src: `${process.env.PUBLIC_URL}/images/image6.png`, alt: "Татуировка 6" },
-    { id: 7, src: `${process.env.PUBLIC_URL}/images/image7.png`, alt: "Татуировка 7" },
-    { id: 8, src: `${process.env.PUBLIC_URL}/images/image8.png`, alt: "Татуировка 8" },
-    { id: 9, src: `${process.env.PUBLIC_URL}/images/image9.png`, alt: "Татуировка 9" },
-    { id: 10, src: `${process.env.PUBLIC_URL}/images/image10.png`, alt: "Татуировка 10" },
-    { id: 11, src: `${process.env.PUBLIC_URL}/images/image11.png`, alt: "Татуировка 11" },
-    { id: 12, src: `${process.env.PUBLIC_URL}/images/image12.png`, alt: "Татуировка 12" },
-  ];
+  const galleryImages = images && images.length ? images : defaultImages;
 
   /* ---------- MOBILE CHECK ---------- */
   useEffect(() => {
@@ -35,23 +37,28 @@ const Portfolio = () => {
   /* ---------- NEXT/PREV WITH USECALLBACK ---------- */
   const nextImage = useCallback(() => {
     setCurrentImageIndex(prev =>
-      prev === images.length - 1 ? 0 : prev + 1
+      prev === galleryImages.length - 1 ? 0 : prev + 1
     );
-  }, [images.length]);
+  }, [galleryImages.length]);
 
   const prevImage = useCallback(() => {
     setCurrentImageIndex(prev =>
-      prev === 0 ? images.length - 1 : prev - 1
+      prev === 0 ? galleryImages.length - 1 : prev - 1
     );
-  }, [images.length]);
+  }, [galleryImages.length]);
 
   const nextCarousel = useCallback(() => {
-    setCarouselIndex(prev => (prev + 1) % images.length);
-  }, [images.length]);
+    setCarouselIndex(prev => (prev + 1) % galleryImages.length);
+  }, [galleryImages.length]);
 
   const prevCarousel = useCallback(() => {
-    setCarouselIndex(prev => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
+    setCarouselIndex(prev => (prev - 1 + galleryImages.length) % galleryImages.length);
+  }, [galleryImages.length]);
+
+  const openViewerAt = (index) => {
+    setCarouselIndex(index);
+    setCurrentImageIndex(index);
+  };
 
   /* ---------- TOUCH EVENTS ---------- */
   const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX);
@@ -71,11 +78,13 @@ const Portfolio = () => {
 
   /* ---------- MOBILE AUTO-CENTERING ---------- */
   useEffect(() => {
-    if (carouselRef.current && isMobile) {
-      carouselRef.current.scrollTo({
-        left: carouselRef.current.offsetWidth * carouselIndex,
-        behavior: 'smooth'
-      });
+    if (!carouselRef.current || !isMobile) return;
+
+    const slides = carouselRef.current.querySelectorAll('.carousel-3d-slide');
+    const activeSlide = slides[carouselIndex];
+
+    if (activeSlide) {
+      activeSlide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }, [carouselIndex, isMobile]);
 
@@ -98,11 +107,11 @@ const Portfolio = () => {
 
       {/* DESKTOP PREMIUM GALLERY */}
       <div className="portfolio-gallery desktop-gallery">
-        {images.map((image, index) => (
+        {galleryImages.map((image, index) => (
           <div
             key={image.id}
             className="gallery-item"
-            onClick={() => setCurrentImageIndex(index)}
+            onClick={() => openViewerAt(index)}
           >
             <img
               src={image.src}
@@ -123,13 +132,13 @@ const Portfolio = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {images.map((image, index) => (
+          {galleryImages.map((image, index) => (
             <div
               key={image.id}
               className={`carousel-3d-slide ${
                 index === carouselIndex ? "active" : ""
               }`}
-              onClick={() => setCurrentImageIndex(index)}
+              onClick={() => openViewerAt(index)}
             >
               <img
                 src={image.src}
@@ -151,7 +160,7 @@ const Portfolio = () => {
 
         {/* INDICATORS */}
         <div className="carousel-indicators">
-          {images.map((_, index) => (
+          {galleryImages.map((_, index) => (
             <button
               key={index}
               className={`carousel-indicator ${index === carouselIndex ? 'active' : ''}`}
@@ -173,8 +182,8 @@ const Portfolio = () => {
             <button className="nav-button prev-button" onClick={prevImage}>‹</button>
 
             <img
-              src={images[currentImageIndex].src}
-              alt={images[currentImageIndex].alt}
+              src={galleryImages[currentImageIndex].src}
+              alt={galleryImages[currentImageIndex].alt}
               className="viewer-image"
             />
 

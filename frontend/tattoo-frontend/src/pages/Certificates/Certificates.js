@@ -1,302 +1,158 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React from 'react';
 import './Certificates.css';
 
-const Certificates = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(null);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  const carouselRef = useRef(null);
+const offers = [
+  {
+    kind: 'tattoo',
+    title: 'Тату',
+    discount: '-20%',
+    subtitle: 'Сертификат на скидку для любой татуировки',
+    description:
+      'Подходит для нового эскиза или продолжения проекта. Оформляется быстро, можно подарить.',
+    perks: ['Любые стили и размеры', 'Подарочный формат', 'Запись в мессенджере'],
+  },
+  {
+    kind: 'permanent',
+    title: 'Перманент',
+    discount: '-15%',
+    subtitle: 'Сертификат на перманентный макияж',
+    description:
+      'Для бровей, губ или межреснички. Скидка фиксируется в сертификате и действует при записи.',
+    perks: ['Любые зоны', 'Идеально в подарок', 'Удобная запись'],
+  },
+];
 
-  // Placeholder certificates - replace with actual certificate images
-  const certificates = [
-    {
-      id: 1,
-      title: 'Сертификат по татуировке',
-      description: 'Профессиональное обучение техникам татуировки',
-      image: `${process.env.PUBLIC_URL}/images/image1.png`, // Replace with certificate images
-      year: '2023'
-    },
-    {
-      id: 2,
-      title: 'Сертификат по перманентному макияжу',
-      description: 'Сертифицированный специалист по перманентному макияжу',
-      image: `${process.env.PUBLIC_URL}/images/image2.png`, // Replace with certificate images
-      year: '2023'
-    },
-    {
-      id: 3,
-      title: 'Мастер-класс по цветным татуировкам',
-      description: 'Углубленное изучение техник цветной татуировки',
-      image: `${process.env.PUBLIC_URL}/images/image3.png`, // Replace with certificate images
-      year: '2024'
-    },
-    {
-      id: 4,
-      title: 'Сертификат по безопасности',
-      description: 'Соблюдение всех стандартов безопасности и гигиены',
-      image: `${process.env.PUBLIC_URL}/images/image4.png`, // Replace with certificate images
-      year: '2024'
-    },
-  ];
+const steps = [
+  {
+    title: 'Выберите направление',
+    text: 'Тату или перманентный макияж. Уточним детали и подберем оптимальную скидку.',
+  },
+  {
+    title: 'Получите сертификат',
+    text: 'Электронный формат приходит в день оплаты. Можно подарить или использовать самому.',
+  },
+  {
+    title: 'Запишитесь на дату',
+    text: 'Выберите удобное время и подтвердите запись. Скидка применяется на месте.',
+  },
+];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: '0px 0px -20px 0px',
-      }
-    );
+const terms = [
+  {
+    title: 'Срок действия',
+    text: 'Указывается в сертификате и фиксируется при оформлении.',
+  },
+  {
+    title: 'Передача',
+    text: 'Сертификат можно подарить другому человеку без доплат.',
+  },
+  {
+    title: 'Условия',
+    text: 'Скидка действует на выбранную услугу и не суммируется с акциями.',
+  },
+];
 
-    const items = document.querySelectorAll('.certificate-item');
-    items.forEach((item) => observer.observe(item));
+const Certificates = () => (
+  <main className="certificates-page discount">
+    <section className="cert-hero">
+      <div className="cert-hero__glow" aria-hidden="true" />
+      <div className="cert-hero__ring" aria-hidden="true" />
+      <div className="cert-container">
+        <span className="cert-kicker">Подарочные сертификаты</span>
+        <h1 className="cert-title">Сертификаты на скидку</h1>
+        <p className="cert-subtitle">
+          Тату или перманент — стильный подарок и повод обновиться. Оформление за пару
+          минут, условия прозрачные, скидка закрепляется в сертификате.
+        </p>
+        <div className="cert-hero__actions">
+          <a className="cert-btn primary" href="https://t.me/vikavikatattoo" target="_blank" rel="noreferrer">
+            Получить сертификат
+          </a>
+          <a className="cert-btn ghost" href="https://t.me/vikavikatattoo" target="_blank" rel="noreferrer">
+            Задать вопрос
+          </a>
+        </div>
+      </div>
+    </section>
 
-    return () => observer.disconnect();
-  }, []);
+    <section className="cert-offers">
+      <div className="cert-container">
+        <div className="cert-grid">
+          {offers.map((offer, index) => (
+            <article
+              key={offer.kind}
+              className={`cert-card cert-card--${offer.kind}`}
+              style={{ '--delay': `${index * 140}ms` }}
+            >
+              <div className="cert-card__header">
+                <span className="cert-card__tag">{offer.title}</span>
+                <span className="cert-card__discount">{offer.discount}</span>
+              </div>
+              <h2 className="cert-card__title">{offer.subtitle}</h2>
+              <p className="cert-card__desc">{offer.description}</p>
+              <ul className="cert-card__list">
+                {offer.perks.map((perk) => (
+                  <li key={perk}>{perk}</li>
+                ))}
+              </ul>
+              <a className="cert-card__cta" href="https://t.me/vikavikatattoo" target="_blank" rel="noreferrer">
+                Оформить сертификат
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
 
-  const nextImage = useCallback(() => {
-    setCurrentImageIndex((prev) =>
-      prev === certificates.length - 1 ? 0 : prev + 1
-    );
-  }, [certificates.length]);
+    <section className="cert-steps">
+      <div className="cert-container">
+        <h2 className="cert-section-title">Как это работает</h2>
+        <div className="cert-steps__grid">
+          {steps.map((step, index) => (
+            <div key={step.title} className="cert-step">
+              <span className="cert-step__num">{`0${index + 1}`}</span>
+              <h3 className="cert-step__title">{step.title}</h3>
+              <p className="cert-step__text">{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
-  const prevImage = useCallback(() => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? certificates.length - 1 : prev - 1
-    );
-  }, [certificates.length]);
-
-  const nextCarousel = useCallback(() => {
-    setCarouselIndex((prev) => (prev + 1) % certificates.length);
-  }, [certificates.length]);
-
-  const prevCarousel = useCallback(() => {
-    setCarouselIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
-  }, [certificates.length]);
-
-  const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = useCallback(() => {
-    if (touchStart - touchEnd > 50) {
-      if (currentImageIndex !== null) {
-        nextImage();
-      } else {
-        nextCarousel();
-      }
-    }
-    if (touchStart - touchEnd < -50) {
-      if (currentImageIndex !== null) {
-        prevImage();
-      } else {
-        prevCarousel();
-      }
-    }
-  }, [touchStart, touchEnd, currentImageIndex, nextImage, prevImage, nextCarousel, prevCarousel]);
-
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollTo({
-        left: carouselRef.current.offsetWidth * carouselIndex,
-        behavior: 'smooth'
-      });
-    }
-  }, [carouselIndex]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (currentImageIndex !== null) {
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-        if (e.key === 'Escape') setCurrentImageIndex(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentImageIndex, nextImage, prevImage]);
-
-  return (
-    <div className="certificates-page">
-      {/* Hero Section */}
-      <section className="certificates-hero">
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <h1 className="hero-title">Сертификаты</h1>
-          <p className="hero-subtitle">
-            Подтверждение профессиональной квалификации и постоянного развития
+    <section className="cert-terms">
+      <div className="cert-container">
+        <div className="cert-terms__header">
+          <h2 className="cert-section-title">Важно знать</h2>
+          <p className="cert-section-subtitle">
+            Честные условия без мелкого шрифта. Если нужно — подстроим под ваш запрос.
           </p>
         </div>
-      </section>
-
-      {/* Certificates Grid */}
-      <section className="certificates-section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Мои достижения</h2>
-            <p className="section-subtitle">
-              Регулярное обучение и повышение квалификации — залог высокого качества работы
-            </p>
-          </div>
-
-          {/* Desktop Grid */}
-          <div className="certificates-grid desktop-grid">
-            {certificates.map((cert, index) => (
-              <div
-                key={cert.id}
-                className="certificate-item"
-                onClick={() => setCurrentImageIndex(index)}
-              >
-                <div className="certificate-image-wrapper">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="certificate-image"
-                    loading="lazy"
-                  />
-                  <div className="certificate-overlay">
-                    <div className="certificate-info">
-                      <span className="certificate-year">{cert.year}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="certificate-content">
-                  <h3 className="certificate-title">{cert.title}</h3>
-                  <p className="certificate-description">{cert.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile Carousel */}
-          <div className="certificates-carousel mobile-carousel">
-            <div
-              className="carousel-container"
-              ref={carouselRef}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              {certificates.map((cert, index) => (
-                <div
-                  key={cert.id}
-                  className="carousel-slide"
-                  onClick={() => setCurrentImageIndex(index)}
-                >
-                  <div className="certificate-image-wrapper">
-                    <img
-                      src={cert.image}
-                      alt={cert.title}
-                      className="carousel-certificate-image"
-                      loading="lazy"
-                    />
-                    <div className="certificate-overlay">
-                      <div className="certificate-info">
-                        <span className="certificate-year">{cert.year}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="certificate-content">
-                    <h3 className="certificate-title">{cert.title}</h3>
-                    <p className="certificate-description">{cert.description}</p>
-                  </div>
-                </div>
-              ))}
+        <div className="cert-terms__grid">
+          {terms.map((term) => (
+            <div key={term.title} className="cert-term">
+              <h3 className="cert-term__title">{term.title}</h3>
+              <p className="cert-term__text">{term.text}</p>
             </div>
-
-            {/* Carousel Navigation */}
-            <button
-              className="carousel-nav carousel-prev"
-              onClick={prevCarousel}
-              aria-label="Previous certificate"
-            >
-              ‹
-            </button>
-            <button
-              className="carousel-nav carousel-next"
-              onClick={nextCarousel}
-              aria-label="Next certificate"
-            >
-              ›
-            </button>
-
-            {/* Carousel Indicators */}
-            <div className="carousel-indicators">
-              {certificates.map((_, index) => (
-                <button
-                  key={index}
-                  className={`carousel-indicator ${index === carouselIndex ? 'active' : ''}`}
-                  onClick={() => setCarouselIndex(index)}
-                  aria-label={`Go to certificate ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* Image Viewer Modal */}
-      {currentImageIndex !== null && (
-        <div className="certificate-viewer">
-          <div
-            className="viewer-container"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            <button
-              className="nav-button prev-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              aria-label="Previous certificate"
-            >
-              ‹
-            </button>
-
-            <img
-              src={certificates[currentImageIndex].image}
-              alt={certificates[currentImageIndex].title}
-              className="viewer-image"
-              onClick={(e) => e.stopPropagation()}
-            />
-
-            <button
-              className="nav-button next-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              aria-label="Next certificate"
-            >
-              ›
-            </button>
-          </div>
-
-          <button
-            className="close-button"
-            onClick={() => setCurrentImageIndex(null)}
-            aria-label="Close viewer"
-          >
-            ×
-          </button>
+    <section className="cert-final">
+      <div className="cert-container cert-final__inner">
+        <div>
+          <h2 className="cert-final__title">Готовы оформить сертификат?</h2>
+          <p className="cert-final__text">
+            Напишите удобным способом — ответим быстро и подготовим сертификат под ваш
+            запрос.
+          </p>
         </div>
-      )}
-    </div>
-  );
-};
+        <a className="cert-btn primary" href="https://t.me/vikavikatattoo" target="_blank" rel="noreferrer">
+          Перейти к контактам
+        </a>
+      </div>
+    </section>
+  </main>
+);
 
 export default Certificates;

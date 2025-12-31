@@ -2,27 +2,28 @@ import React, { useState } from 'react';
 import Popup from '../../components/Popup/Popup';
 import './Services.css';
 
-const TattooServices = () => {
+const TattooServices = ({ images, services: servicesOverride }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const serviceImages = Array.isArray(images) ? images : [];
 
-  const services = [
+  const services = servicesOverride || [
     {
       title: 'Персональные татуировки',
       description: 'Выбор уникального дизайна...',
-      image: process.env.PUBLIC_URL + '/images/image9.png',
+      image: serviceImages[0] || process.env.PUBLIC_URL + '/images/image9.png',
       details: ['Индивидуальный эскиз', 'Консультация', 'Гарантия качества']
     },
     {
       title: 'Консультации по дизайну',
       description: 'Не знаете, какой дизайн выбрать?',
-      image: process.env.PUBLIC_URL + '/images/image10.png',
+      image: serviceImages[1] || process.env.PUBLIC_URL + '/images/image10.png',
       details: ['3D-визуализация', 'Рекомендации', 'Проработка идеи']
     },
     {
       title: 'Обновление татуировок',
       description: 'Коррекция и перекрытие старых работ.',
-      image: process.env.PUBLIC_URL + '/images/image1.png',
+      image: serviceImages[2] || process.env.PUBLIC_URL + '/images/image1.png',
       details: ['Коррекция контура', 'Добавление деталей', 'Перекрытие']
     }
   ];
@@ -35,9 +36,6 @@ const TattooServices = () => {
   return (
     <section className="tattoo-services">
       <div className="services-container">
-        {/* Removed "МОИ УСЛУГИ" heading */}
-        <p className="section-subtitle">Профессиональный подход</p>
-
         <div className="services-grid">
           {services.map((service, index) => (
             <div key={index} className="service-card">

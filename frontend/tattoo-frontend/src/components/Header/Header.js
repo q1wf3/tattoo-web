@@ -71,7 +71,6 @@ const Header = () => {
         >
           <ul>
             <li><Link to="/" onClick={closeMenu}>Главная</Link></li>
-            <li><Link to="/services" onClick={closeMenu}>Услуги</Link></li>
             <li><Link to="/permanent" onClick={closeMenu}>Перманент</Link></li>
             <li><Link to="/tattoo" onClick={closeMenu}>Тату</Link></li>
             <li><Link to="/certificates" onClick={closeMenu}>Сертификаты</Link></li>

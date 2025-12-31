@@ -4,8 +4,13 @@ import './Contact.css';
 
 const Contact = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   const togglePopup = () => setIsPopupVisible(!isPopupVisible);
+  const loadMap = () => setIsMapLoaded(true);
+
+  const mapSrc =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2897.2346134962286!2d39.91502145594151!3d43.434815796859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40f5cbebffeeeeef%3A0xaa06148dc2b68fe1!2zRlJBTksgVEFUVE9PINCi0LDRgtGDINGB0LDQu9C-0L0g0KHQvtGH0Lgg0JDQtNC70LXRgA!5e0!3m2!1sru!2sde!4v1749004432613!5m2!1sru!2sde";
 
   return (
     <div className="contact-container">
@@ -52,15 +57,22 @@ const Contact = () => {
           <h2 className="section-title">Как меня найти</h2>
           <div className="title-divider"></div>
           <div className="map-container">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2897.2346134962286!2d39.91502145594151!3d43.434815796859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40f5cbebffeeeeef%3A0xaa06148dc2b68fe1!2zRlJBTksgVEFUVE9PINCi0LDRgtGDINGB0LDQu9C-0L0g0KHQvtGH0Lgg0JDQtNC70LXRgA!5e0!3m2!1sru!2sde!4v1749004432613!5m2!1sru!2sde"
-              width="100%"
-              height="400"
-              style={{border: 0}}
-              allowFullScreen=""
-              loading="lazy"
-              title="Location"
-            ></iframe>
+            {isMapLoaded ? (
+              <iframe
+                src={mapSrc}
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                title="Location"
+              ></iframe>
+            ) : (
+              <button className="map-placeholder" onClick={loadMap} type="button">
+                <span className="map-placeholder__title">Показать карту</span>
+                <span className="map-placeholder__subtitle">Нажмите, чтобы загрузить</span>
+              </button>
+            )}
           </div>
         </div>
 

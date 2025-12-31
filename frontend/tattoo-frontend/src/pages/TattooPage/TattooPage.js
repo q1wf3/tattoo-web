@@ -36,16 +36,12 @@ const TattooPage = () => {
 
       {/* HERO SECTION */}
       <section className="hero-section">
-        <div
-          className="hero-bg-image"
-          style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/tattoo-bg.jpg)` }}
-        />
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="hero-video mobile-video"
+          className="hero-video hero-video-bg"
         >
           <source src={`${process.env.PUBLIC_URL}/video2.mp4`} type="video/mp4" />
         </video>
@@ -53,36 +49,23 @@ const TattooPage = () => {
         
         <div className="hero-content-wrapper">
           <div className="hero-content">
+            <span className="hero-kicker">VikaVikaTattoo</span>
             <h1>Татуировки</h1>
             <p>Уникальные татуировки, созданные с вниманием и профессионализмом</p>
-            <button className="hero-book-btn" onClick={openTelegram}>
-              Записаться
-            </button>
-          </div>
-
-          {/* Desktop Video Panel */}
-          <div className="hero-video-panel desktop-panel">
-            <div className="video-panel-wrapper">
-              <div className="video-panel-content">
-                <video
-                  className="panel-video"
-                  src={`${process.env.PUBLIC_URL}/video2.mp4`}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-                <button className="panel-book-btn" onClick={openTelegram}>
-                  Записаться
-                </button>
-              </div>
+            <div className="hero-actions">
+              <button className="hero-book-btn" onClick={openTelegram}>
+                Записаться
+              </button>
+              <a className="hero-outline-btn" href="#portfolio">
+                Смотреть работы
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* PORTFOLIO */}
-      <section className="section portfolio-section">
+      <section id="portfolio" className="section portfolio-section">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">Мои работы</h2>
